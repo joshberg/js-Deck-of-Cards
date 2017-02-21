@@ -65,8 +65,8 @@ const Ranks = [{
     }
 ];
 
-const SuitsArray = ["Clubs","Diamonds","Hearts","Spades"];
-const RankArray = ['2','3','4','5','6','7','8','9','10','J','Q','K','A'];
+const SuitsArray = ["Clubs", "Diamonds", "Hearts", "Spades"];
+const RankArray = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A'];
 
 const Joker = {
     num: 'JK',
@@ -94,23 +94,23 @@ class Card {
         this.Suit = Suit;
         this.Rank = Rank;
     }
-    Compare(a,b){
-        if(RankArray.indexOf(a.Rank)>RankArray.indexOf(b.Rank)){
+    Compare(a, b) {
+        if (RankArray.indexOf(a.Rank) > RankArray.indexOf(b.Rank)) {
             return a;
-        } else if (RankArray.indexOf(a.Rank)<RankArray.indexOf(b.Rank)){
+        } else if (RankArray.indexOf(a.Rank) < RankArray.indexOf(b.Rank)) {
             return b;
-        } else if (RankArray.indexOf(a.Rank)===RankArray.indexOf(b.Rank)){
-            if(SuitsArray.indexOf(a.Suit)>SuitsArray.indexOf(b.Suit)){
+        } else if (RankArray.indexOf(a.Rank) === RankArray.indexOf(b.Rank)) {
+            if (SuitsArray.indexOf(a.Suit) > SuitsArray.indexOf(b.Suit)) {
                 return a;
             } else {
                 return b;
             }
         }
     }
-    CompareWithTrumpNoBowers(a,b,trump){
-        if(a.Suit === trump && b.Suit === trump){
-            Compare(a,b);
-        } else if (a.Suit === trump && b.Suit !== trump){
+    CompareWithTrumpNoBowers(a, b, trump) {
+        if (a.Suit === trump && b.Suit === trump) {
+            Compare(a, b);
+        } else if (a.Suit === trump && b.Suit !== trump) {
             return a;
         } else {
             return b;
@@ -130,7 +130,8 @@ class Deck {
                 this.Stack.push(new Card(suit, rank));
             })
         })
-        function finishShuffle(newStack){
+
+        function finishShuffle(newStack) {
             this.Stack = newStack;
         }
     }
@@ -140,7 +141,7 @@ class Deck {
     Draw() {
         return this.Stack.pop();
     }
-    Shuffle(){
+    Shuffle() {
         var stack = this.Stack;
         var that = this;
         return new Promise(function (resolve, reject) {
@@ -152,7 +153,20 @@ class Deck {
                 }
                 stack = temp;
             }
-            that.Stack = stack;            
+            that.Stack = stack;
+            resolve();
+        });
+    }
+    ShuffleLite() {
+        var stack = this.Stack;
+        var that = this;
+        return new Promise(function (resolve, reject) {
+            var temp = [];
+            for (var j = stack.length; j > 0; j--) {
+                var objInArray = stack.splice(getRandomInt(0, stack.length - 1), 1);
+                temp.push(objInArray[0]);
+            }
+            that.Stack = temp;
             resolve();
         });
     }
@@ -161,20 +175,29 @@ class Deck {
     }
 }
 
-class DiscardPile{
-    constructor(){
+class DiscardPile {
+    constructor() {
         this.Pile = [];
     }
-    Add(Card){
+    Add(Card) {
         this.Pile.push(Card);
     }
-    GetAllCards(){
+    GetAllCards() {
         return this.Pile;
     }
-    TopOfPile(){
-        return this.Pile[this.Pile.length-1];
+    TopOfPile() {
+        return this.Pile[this.Pile.length - 1];
     }
-    Clear(){
+    Clear() {
         this.Pile = [];
     }
+}
+
+module.exports = {
+    Suits,
+    Ranks,
+    Joker,
+    Card,
+    Deck,
+    DiscardPile
 }
