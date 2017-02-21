@@ -2,7 +2,7 @@
   "name": "deck-of-cards",
   "version": "0.0.1",
   "description": "A template for a deck of playing cards and some useful methods to go with it",
-  "main": "index.js",
+  "main": "DeckOfCards.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

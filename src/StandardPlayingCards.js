@@ -1,3 +1,5 @@
+const Utils = require('./Utils.js');
+
 const Suits = [{
         C: 'Clubs'
     },
@@ -73,22 +75,6 @@ const Joker = {
     long: 'Joker'
 };
 
-//The following two functions are from: http://stackoverflow.com/a/1527820
-
-/** 
- * Returns a random number between min (inclusive) and max (exclusive)
- */
-function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
-}
-/**
- * Returns a random integer between min (inclusive) and max (inclusive)
- * Using Math.round() will give you a non-uniform distribution!
- */
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 class Card {
     constructor(Suit, Rank) {
         this.Suit = Suit;
@@ -130,10 +116,6 @@ class Deck {
                 this.Stack.push(new Card(suit, rank));
             })
         })
-
-        function finishShuffle(newStack) {
-            this.Stack = newStack;
-        }
     }
     GetLength() {
         return this.Stack.length;
@@ -148,7 +130,7 @@ class Deck {
             for (var i = 0; i < 7; i++) {
                 var temp = [];
                 for (var j = stack.length; j > 0; j--) {
-                    var objInArray = stack.splice(getRandomInt(0, stack.length - 1), 1);
+                    var objInArray = stack.splice(Utils.getRandomInt(0, stack.length - 1), 1);
                     temp.push(objInArray[0]);
                 }
                 stack = temp;
@@ -163,7 +145,7 @@ class Deck {
         return new Promise(function (resolve, reject) {
             var temp = [];
             for (var j = stack.length; j > 0; j--) {
-                var objInArray = stack.splice(getRandomInt(0, stack.length - 1), 1);
+                var objInArray = stack.splice(Utils.getRandomInt(0, stack.length - 1), 1);
                 temp.push(objInArray[0]);
             }
             that.Stack = temp;
@@ -171,25 +153,7 @@ class Deck {
         });
     }
     PickRandom() {
-        return this.Stack[getRandomInt(0, this.Stack.length - 1)];
-    }
-}
-
-class DiscardPile {
-    constructor() {
-        this.Pile = [];
-    }
-    Add(Card) {
-        this.Pile.push(Card);
-    }
-    GetAllCards() {
-        return this.Pile;
-    }
-    TopOfPile() {
-        return this.Pile[this.Pile.length - 1];
-    }
-    Clear() {
-        this.Pile = [];
+        return this.Stack[Utils.getRandomInt(0, this.Stack.length - 1)];
     }
 }
 
@@ -198,6 +162,5 @@ module.exports = {
     Ranks,
     Joker,
     Card,
-    Deck,
-    DiscardPile
+    Deck
 }
