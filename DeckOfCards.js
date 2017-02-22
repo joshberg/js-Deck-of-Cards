@@ -1,6 +1,6 @@
-var StandardDeck = require('./src/StandardPlayingCards.js');
-var CustomDeck = require('./src/CustomCards.js');
-var DeckUtils = require('./src/CardUtilities.js');
+var StandardDeck = require('./src/ServerVersion/StandardPlayingCards.js');
+var CustomDeck = require('./src/ServerVersion/CustomCards.js');
+var DeckUtils = require('./src/ServerVersion/CardUtilities.js');
 
 module.exports = {
     StandardDeck,
